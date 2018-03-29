@@ -18,6 +18,7 @@ It requires no additional files or components - just add the template and you're
 
 Monitors the following items:
 
+* Virtual chassis monitoring
 * Device availability (ping check)
 * Alarm status (red / yellow)
 * 5 minute load average
@@ -37,10 +38,12 @@ Discovery will detect your ports and VLANs, and this will work in virtual chassi
 Tested with the following hardware:
 
 * EX4600
+* EX4300
 * EX3300
 * EX2200
 
-All suggestions, mergerequests, ideas and contributors are welcome!
+
+All suggestions, merge requests, ideas and contributors are welcome!
 
 How to use it
 --------------
@@ -58,3 +61,10 @@ Use the mibs at https://www.juniper.net/documentation/en_US/release-independent/
 - fork this project
 - always use numeric oids
 - create pull request
+
+Ideas:
+
+- inform about configuration changes
+- more detailed health status
+- monitor storage
+- monitor logged in users
