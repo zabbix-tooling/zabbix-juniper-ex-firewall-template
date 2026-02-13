@@ -1,0 +1,1211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>7.0</version>
+    <template_groups>
+        <template_group>
+            <uuid>72d96c858e3a4736a6e094d23d8c5587</uuid>
+            <name>Templates/Network devices</name>
+        </template_group>
+    </template_groups>
+    <templates>
+        <template>
+            <uuid>860ac494df8941ca936ce97c73ae632a</uuid>
+            <template>Custom - HW - Juniper EX</template>
+            <name>Custom - HW - Juniper EX</name>
+            <groups>
+                <group>
+                    <name>Networking Hardware</name>
+                </group>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <items>
+                <item>
+                    <uuid>0ce5951c8e9a485e8a81357959095158</uuid>
+                    <name>ICMP Response</name>
+                    <type>SIMPLE</type>
+                    <key>icmpping</key>
+                    <delay>30</delay>
+                    <history>90d</history>
+                    <valuemap>
+                        <name>Service state</name>
+                    </valuemap>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Health</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>58abcaff11b04587926e5b7d6b8cda0e</uuid>
+                            <expression>sum(/Custom - HW - Juniper EX/icmpping,#3)=0 or ({TRIGGER.VALUE}=1 and sum(/Custom - HW - Juniper EX/icmpping,#3)&lt;&gt;3)</expression>
+                            <name>ICMP Response</name>
+                            <priority>DISASTER</priority>
+                            <description>The switch member has stopped responding to ICMP echo requests, and is likely offline.
+
+                                Please investigate.</description>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>74ec3edbbc294c6e92d3d6c222e3092a</uuid>
+                    <name>Red alarm</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.2636.3.4.2.3.1.0</snmp_oid>
+                    <key>RedAlarm</key>
+                    <delay>60</delay>
+                    <history>90d</history>
+                    <units>alarm(s)</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Health</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>04df3679a7314e659dceeba39b7c0a52</uuid>
+                            <expression>last(/Custom - HW - Juniper EX/RedAlarm)&lt;&gt;2</expression>
+                            <name>Red Alarm</name>
+                            <priority>HIGH</priority>
+                            <description>A red alarm is reporting on this device. Please login to the CLI and check what this alert has been caused by.</description>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>77ae4cbb534141018db3ee64a25c3eaa</uuid>
+                    <name>System description</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>1.3.6.1.2.1.1.1.0</snmp_oid>
+                    <key>system.descr</key>
+                    <delay>3600</delay>
+                    <history>90d</history>
+                    <value_type>CHAR</value_type>
+                    <trends>0</trends>
+                    <description>Full system description including JunOS version (SNMPv2-MIB: sysDescr)</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Health</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>37a81fd1411d439d8a5ccfaa1dcf8314</uuid>
+                    <name>Hardware model name</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.2636.3.40.1.4.1.1.1.8.0</snmp_oid>
+                    <key>system.hw.model</key>
+                    <delay>3600</delay>
+                    <history>90d</history>
+                    <value_type>CHAR</value_type>
+                    <trends>0</trends>
+                    <description>Hardware model name (Juniper MIB: jnxBoxDescr), e.g. &quot;EX3300&quot;</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Health</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>9a35ed5dd09e48cc8073f74c3ea37b94</uuid>
+                    <name>Hardware serial number</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>1.3.6.1.4.1.2636.3.1.3.0</snmp_oid>
+                    <key>system.hw.serialnumber</key>
+                    <delay>3600</delay>
+                    <history>90d</history>
+                    <value_type>CHAR</value_type>
+                    <trends>0</trends>
+                    <description>Serial number of the device (Juniper MIB: jnxBoxSerialNo)</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Health</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>2934f6a94c474c46901041dfc98c7d66</uuid>
+                            <expression>(last(/Custom - HW - Juniper EX/system.hw.serialnumber,#1)&lt;&gt;last(/Custom - HW - Juniper EX/system.hw.serialnumber,#2))=1 and length(last(/Custom - HW - Juniper EX/system.hw.serialnumber))&gt;0</expression>
+                            <name>Device has been replaced</name>
+                            <priority>INFO</priority>
+                            <description>Device serial number has changed. Acknowledge to close the problem manually.</description>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>f83f002e5da54ee8af4d4e221e2f04f7</uuid>
+                    <name>System location</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>1.3.6.1.2.1.1.6.0</snmp_oid>
+                    <key>system.location</key>
+                    <delay>900</delay>
+                    <history>90d</history>
+                    <value_type>CHAR</value_type>
+                    <trends>0</trends>
+                    <description>Physical location of the node (SNMPv2-MIB: sysLocation)</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Health</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>01d63ae2deac425b931cc3be2ece79ed</uuid>
+                    <name>System name</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>1.3.6.1.2.1.1.5.0</snmp_oid>
+                    <key>system.name</key>
+                    <delay>900</delay>
+                    <history>90d</history>
+                    <value_type>CHAR</value_type>
+                    <trends>0</trends>
+                    <description>Administratively-assigned system name (SNMPv2-MIB: sysName)</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Health</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>81c4939d8d8843ccabbdaa9357240c9e</uuid>
+                            <expression>(last(/Custom - HW - Juniper EX/system.name,#1)&lt;&gt;last(/Custom - HW - Juniper EX/system.name,#2))=1 and length(last(/Custom - HW - Juniper EX/system.name))&gt;0</expression>
+                            <name>System name has changed</name>
+                            <priority>INFO</priority>
+                            <description>The system name has changed. Acknowledge to close the problem manually.</description>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>14d61ac9f3a740d08a889a4fe46be2ef</uuid>
+                    <name>System Firmware Version</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>1.3.6.1.4.1.2636.3.40.1.4.1.1.1.5.0</snmp_oid>
+                    <key>system.ver</key>
+                    <delay>3600</delay>
+                    <history>90d</history>
+                    <value_type>CHAR</value_type>
+                    <trends>0</trends>
+                    <description>System firmware version</description>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Health</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>1a43375906864cd28fb341ad27db4ae6</uuid>
+                    <name>Uptime</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.2.1.1.3.0</snmp_oid>
+                    <key>Uptime</key>
+                    <delay>300</delay>
+                    <history>2d</history>
+                    <units>s</units>
+                    <preprocessing>
+                        <step>
+                            <type>MULTIPLIER</type>
+                            <parameters>
+                                <parameter>0.01</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Health</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>36e1c46aad0045cc80aa8ff06d6d9d3c</uuid>
+                            <expression>last(/Custom - HW - Juniper EX/Uptime)&lt;600</expression>
+                            <name>has been restarted</name>
+                            <priority>INFO</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>a2ba051eb6894600bc351625aac652d5</uuid>
+                    <name>Yellow alarm</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.4.1.2636.3.4.2.2.1.0</snmp_oid>
+                    <key>YellowAlarm</key>
+                    <delay>60</delay>
+                    <history>90d</history>
+                    <units>alarm(s)</units>
+                    <tags>
+                        <tag>
+                            <tag>Application</tag>
+                            <value>Device Health</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>4a418df919294551b937f474163b5faf</uuid>
+                            <expression>last(/Custom - HW - Juniper EX/YellowAlarm)&lt;&gt;2</expression>
+                            <name>Yellow Alarm</name>
+                            <priority>AVERAGE</priority>
+                            <description>A yellow alarm is reporting on this device. Please login to the CLI and check what this alert has been caused by.</description>
+                        </trigger>
+                    </triggers>
+                </item>
+            </items>
+            <discovery_rules>
+                <discovery_rule>
+                    <uuid>f094f9f0edb1409f849a2ad87bbae3b4</uuid>
+                    <name>JunOS Interfaces</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>discovery[{#SNMPVALUE},1.3.6.1.2.1.2.2.1.2]</snmp_oid>
+                    <key>discovery.ifDescr</key>
+                    <delay>300</delay>
+                    <status>DISABLED</status>
+                    <filter>
+                        <conditions>
+                            <condition>
+                                <macro>{#SNMPVALUE}</macro>
+                                <value>^(fe|ge|xe)-[0-9]+\/[0-9]+\/[0-9]+\.[0-9]+$|^(fe|ge|xe)-[0-9]+\/[0-9]+\/[0-9]+$|^(ae|reth|st)[0-9]+\.[0-9]+$|^(ae|reth|st)[0-9]$|^vcp-[0-9]+$|^vlan.[0-9]+$</value>
+                                <formulaid>A</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <lifetime>14d</lifetime>
+                    <enabled_lifetime_type>DISABLE_NEVER</enabled_lifetime_type>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>0215f049fc414017b3594a65e40c83f7</uuid>
+                            <name>{#SNMPVALUE} - AdminStatus</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.2.1.2.2.1.7.{#SNMPINDEX}</snmp_oid>
+                            <key>AdminStatus[{#SNMPINDEX}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <trends>90d</trends>
+                            <description>ifAdminStatus OBJECT-TYPE
+                                SYNTAX  INTEGER {
+                                up(1),       -- ready to pass packets
+                                down(2),
+                                testing(3)   -- in some test mode
+                                }
+                                MAX-ACCESS  read-write
+                                STATUS      current
+                                DESCRIPTION
+                                &quot;The desired state of the interface.  The testing(3) state
+                                indicates that no operational packets can be passed.  When a
+                                managed system initializes, all interfaces start with
+                                ifAdminStatus in the down(2) state.  As a result of either
+                                explicit management action or per configuration information
+                                retained by the managed system, ifAdminStatus is then
+                                changed to either the up(1) or testing(3) states (or remains
+                                in the down(2) state).&quot;
+                                ::= { ifEntry 7 }</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Interfaces</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>c61de84360534233abd13d625c5750e2</uuid>
+                            <name>{#SNMPVALUE} - Inbound discarded packets</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.2.1.2.2.1.13.{#SNMPINDEX}</snmp_oid>
+                            <key>Inbound_discarded_packets[{#SNMPINDEX}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Interfaces</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>46e2dd83b9944f26ba0e4fcbd75ed6f2</uuid>
+                            <name>{#SNMPVALUE} - Inbound errors</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.2.1.2.2.1.14.{#SNMPINDEX}</snmp_oid>
+                            <key>Inbound_errors[{#SNMPINDEX}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <units>errors/s</units>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Interfaces</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>ee96063554cf40c192e40e055276ae1c</uuid>
+                            <name>{#SNMPVALUE} - Inbound traffic</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.2.1.31.1.1.1.6.{#SNMPINDEX}</snmp_oid>
+                            <key>Inbound_traffic64[{#SNMPINDEX}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <value_type>FLOAT</value_type>
+                            <units>bps</units>
+                            <description>This is a 64 bit counter</description>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <parameters>
+                                        <parameter>8</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Interfaces</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>162b842ed86544d282e360770bfee238</uuid>
+                            <name>{#SNMPVALUE} - OperStatus</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.2.1.2.2.1.8.{#SNMPINDEX}</snmp_oid>
+                            <key>OperStatus[{#SNMPINDEX}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <trends>90d</trends>
+                            <description>ifOperStatus OBJECT-TYPE
+                                SYNTAX  INTEGER {
+                                up(1),        -- ready to pass packets
+                                down(2),
+                                testing(3),   -- in some test mode
+                                unknown(4),   -- status can not be determined
+                                -- for some reason.
+                                dormant(5),
+                                notPresent(6),    -- some component is missing
+                                lowerLayerDown(7) -- down due to state of
+                                -- lower-layer interface(s)
+                                }
+                                MAX-ACCESS  read-only
+                                STATUS      current
+                                DESCRIPTION
+                                &quot;The current operational state of the interface.  The
+                                testing(3) state indicates that no operational packets can
+                                be passed.  If ifAdminStatus is down(2) then ifOperStatus
+                                should be down(2).  If ifAdminStatus is changed to up(1)
+                                then ifOperStatus should change to up(1) if the interface is
+                                ready to transmit and receive network traffic; it should
+                                change to dormant(5) if the interface is waiting for
+                                external actions (such as a serial line waiting for an
+                                incoming connection); it should remain in the down(2) state
+                                if and only if there is a fault that prevents it from going
+                                to the up(1) state; it should remain in the notPresent(6)
+                                state if the interface has missing (typically, hardware)
+                                components</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Interfaces</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>30b264385d0d44168223d2c6ac57291e</uuid>
+                            <name>{#SNMPVALUE} - Outbound discarded packets</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.2.1.2.2.1.19.{#SNMPINDEX}</snmp_oid>
+                            <key>Outbound_discarded_packets[{#SNMPINDEX}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Interfaces</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>5a6f987b26ff40058fb41408d39c98e9</uuid>
+                            <name>{#SNMPVALUE} - Outbound errors</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.2.1.2.2.1.20.{#SNMPINDEX}</snmp_oid>
+                            <key>Outbound_errors[{#SNMPINDEX}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <units>errors/s</units>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Interfaces</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>ca4615766c2a47fe8b88d6ca7c972558</uuid>
+                            <name>{#SNMPVALUE} - Outbound traffic</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.2.1.31.1.1.1.10.{#SNMPINDEX}</snmp_oid>
+                            <key>Outbound_traffic_64[{#SNMPINDEX}]</key>
+                            <delay>120</delay>
+                            <history>7d</history>
+                            <value_type>FLOAT</value_type>
+                            <units>bps</units>
+                            <description>This is a 64 bit counter</description>
+                            <preprocessing>
+                                <step>
+                                    <type>CHANGE_PER_SECOND</type>
+                                    <parameters>
+                                        <parameter/>
+                                    </parameters>
+                                </step>
+                                <step>
+                                    <type>MULTIPLIER</type>
+                                    <parameters>
+                                        <parameter>8</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Interfaces</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                    <trigger_prototypes>
+                        <trigger_prototype>
+                            <uuid>5bbd0e33db7c415ebd140608534f8421</uuid>
+                            <expression>(last(/Custom - HW - Juniper EX/Inbound_discarded_packets[{#SNMPINDEX}]) + last(/Custom - HW - Juniper EX/Outbound_discarded_packets[{#SNMPINDEX}])) &gt; 0</expression>
+                            <name>{#SNMPVALUE} Discarded packets &gt; 0</name>
+                            <status>DISABLED</status>
+                            <priority>INFO</priority>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <uuid>48e3cde72de04224bcb008c1bd3bd2d6</uuid>
+                            <expression>(last(/Custom - HW - Juniper EX/Outbound_errors[{#SNMPINDEX}]) +
+                                last(/Custom - HW - Juniper EX/Inbound_errors[{#SNMPINDEX}])) &gt; 0</expression>
+                            <name>{#SNMPVALUE} Errors &gt; 0</name>
+                            <status>DISABLED</status>
+                            <priority>INFO</priority>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <uuid>496d4b5cac9a41909bae87f574b69e72</uuid>
+                            <expression>last(/Custom - HW - Juniper EX/AdminStatus[{#SNMPINDEX}])=1 and last(/Custom - HW - Juniper EX/OperStatus[{#SNMPINDEX}])&lt;&gt;1</expression>
+                            <name>{#SNMPVALUE} interface not active, OperStatus={ITEM.VALUE2}</name>
+                            <status>DISABLED</status>
+                            <priority>INFO</priority>
+                            <description>Interface should be up, but no link is active</description>
+                        </trigger_prototype>
+                    </trigger_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <uuid>968b94c098134193964f53dbe660856d</uuid>
+                            <name>Interface {#SNMPVALUE}</name>
+                            <graph_items>
+                                <graph_item>
+                                    <drawtype>BOLD_LINE</drawtype>
+                                    <color>2618B1</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <calc_fnc>MAX</calc_fnc>
+                                    <item>
+                                        <host>Custom - HW - Juniper EX</host>
+                                        <key>Inbound_traffic64[{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>594CD8</color>
+                                    <calc_fnc>MAX</calc_fnc>
+                                    <item>
+                                        <host>Custom - HW - Juniper EX</host>
+                                        <key>Inbound_discarded_packets[{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>2</sortorder>
+                                    <color>7B72D8</color>
+                                    <calc_fnc>MAX</calc_fnc>
+                                    <item>
+                                        <host>Custom - HW - Juniper EX</host>
+                                        <key>Inbound_errors[{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>3</sortorder>
+                                    <drawtype>BOLD_LINE</drawtype>
+                                    <color>FFC600</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <calc_fnc>MAX</calc_fnc>
+                                    <item>
+                                        <host>Custom - HW - Juniper EX</host>
+                                        <key>Outbound_traffic_64[{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>4</sortorder>
+                                    <color>FFD440</color>
+                                    <calc_fnc>MAX</calc_fnc>
+                                    <item>
+                                        <host>Custom - HW - Juniper EX</host>
+                                        <key>Outbound_discarded_packets[{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>5</sortorder>
+                                    <color>FFE073</color>
+                                    <calc_fnc>MAX</calc_fnc>
+                                    <item>
+                                        <host>Custom - HW - Juniper EX</host>
+                                        <key>Outbound_errors[{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+                <discovery_rule>
+                    <uuid>4aba8b9956ed4816b70986aedb2a7375</uuid>
+                    <name>JunOS Hardware</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>discovery[{#SNMPVALUE},1.3.6.1.4.1.2636.3.1.13.1.2.7]</snmp_oid>
+                    <key>jnxOperatingL1Index</key>
+                    <delay>300</delay>
+                    <lifetime>30d</lifetime>
+                    <enabled_lifetime_type>DISABLE_NEVER</enabled_lifetime_type>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>c3f187273bad40feb12a110e8dc2223b</uuid>
+                            <name>Switch Member {#SNMPVALUE} - Virtual Chassis Status</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.4.1.2636.3.1.15.1.8.7.{#SNMPVALUE}.0.0</snmp_oid>
+                            <key>jnxFruState.[{#SNMPVALUE}]</key>
+                            <delay>60</delay>
+                            <history>90d</history>
+                            <description>Virtual Chassis Member Operational Status (jnxFruState)
+
+                                1 = Unknown
+                                2 = Empty
+                                3 = Present
+                                4 = Ready
+                                5 = Announce Online
+                                6 = Online
+                                7 = Announce Offline
+                                8 = Offline
+                                9 = Diagnostic
+                                10 = Standby</description>
+                            <valuemap>
+                                <name>Juniper FRU State</name>
+                            </valuemap>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Device Health</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>16b26497ca5c4dc1a379966ef7518087</uuid>
+                                    <expression>last(/Custom - HW - Juniper EX/jnxFruState.[{#SNMPVALUE}])&lt;&gt;6</expression>
+                                    <name>{HOSTNAME} Switch Member {#SNMPVALUE} - VC Member Not Online (Status={ITEM.VALUE})</name>
+                                    <priority>HIGH</priority>
+                                    <description>This trigger fires when a Virtual Chassis member is not in the expected Online state (6). Any other state indicates a potential issue with the VC member.</description>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>c36b85e2ee094ebea48d40685c7097ed</uuid>
+                            <name>Switch Member {#SNMPVALUE} - 5 min load average</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>.1.3.6.1.4.1.2636.3.1.13.1.21.7.{#SNMPVALUE}.0.0</snmp_oid>
+                            <key>jnxOperating5MinLoadAvg.[{#SNMPVALUE}]</key>
+                            <delay>90</delay>
+                            <history>7d</history>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Device Health</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>37a81fd1411d439d8a5ccfaa1dcf9256</uuid>
+                            <name>Switch Member {#SNMPVALUE} - Model Name</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>.1.3.6.1.4.1.2636.3.40.1.4.1.1.1.8.{#SNMPVALUE}</snmp_oid>
+                            <key>system.hw.model[{#SNMPVALUE}]</key>
+                            <delay>3600</delay>
+                            <history>90d</history>
+                            <value_type>CHAR</value_type>
+                            <trends>0</trends>
+                            <description>Hardware model name (Juniper MIB: jnxBoxDescr), e.g. &quot;EX3300&quot;</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Device Health</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>e9b056e3f65b4ce4b658fbc2afa06a3b</uuid>
+                            <name>Switch Member {#SNMPVALUE} - Memory usage</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>.1.3.6.1.4.1.2636.3.1.13.1.11.7.{#SNMPVALUE}.0.0</snmp_oid>
+                            <key>jnxOperatingBuffer.[{#SNMPVALUE}]</key>
+                            <delay>90</delay>
+                            <history>7d</history>
+                            <units>%</units>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Device Health</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>33685b223f6f452983523a9cfe22a3cb</uuid>
+                                    <expression>last(/Custom - HW - Juniper EX/jnxOperatingBuffer.[{#SNMPVALUE}])&gt;70 and last(/Custom - HW - Juniper EX/jnxOperatingBuffer.[{#SNMPVALUE}])&lt;95</expression>
+                                    <name>{HOSTNAME} {#SNMPVALUE} - Memory usage above 70%</name>
+                                    <priority>AVERAGE</priority>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <uuid>27626a6e00114ab2a5b1f223d22bb9e2</uuid>
+                                    <expression>last(/Custom - HW - Juniper EX/jnxOperatingBuffer.[{#SNMPVALUE}])&gt;95</expression>
+                                    <name>{HOSTNAME} {#SNMPVALUE} - Memory usage above 95%</name>
+                                    <priority>HIGH</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>2a1d51e98d784ae79ab6be834c65933b</uuid>
+                            <name>Switch Member {#SNMPVALUE} - CPU usage</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>.1.3.6.1.4.1.2636.3.1.13.1.8.7.{#SNMPVALUE}.0.0</snmp_oid>
+                            <key>jnxOperatingCPU.[{#SNMPVALUE}]</key>
+                            <delay>90</delay>
+                            <history>7d</history>
+                            <units>%</units>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Device Health</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>0fa8eb208d1047149e16a9e35d77797c</uuid>
+                            <name>Switch Member {#SNMPVALUE} - Routing engine temperature</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>.1.3.6.1.4.1.2636.3.1.13.1.7.7.{#SNMPVALUE}.0.0</snmp_oid>
+                            <key>jnxOperatingTemp.[{#SNMPVALUE}]</key>
+                            <delay>90</delay>
+                            <history>7d</history>
+                            <units>°C</units>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Device Health</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>3f61764df09d4182b37be6874d57b3f7</uuid>
+                                    <expression>min(/Custom - HW - Juniper EX/jnxOperatingTemp.[{#SNMPVALUE}],60s)&gt;60</expression>
+                                    <name>{HOSTNAME} {#SNMPVALUE} - High temperature</name>
+                                    <priority>HIGH</priority>
+                                    <description>The temperature of this switch member is above 60ºC.
+
+                                        Please check the status of the fans and environmental conditions immediately.</description>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                    </item_prototypes>
+                    <trigger_prototypes>
+                        <trigger_prototype>
+                            <uuid>94ad6fdb7401434eb11006f2da3e8d38</uuid>
+                            <expression>min(/Custom - HW - Juniper EX/jnxOperatingCPU.[{#SNMPVALUE}],30s)&gt;70 and min(/Custom - HW - Juniper EX/jnxOperatingCPU.[{#SNMPVALUE}],30s)&lt;95 and last(/Custom - HW - Juniper EX/jnxOperating5MinLoadAvg.[{#SNMPVALUE}])&gt;100 and last(/Custom - HW - Juniper EX/jnxOperating5MinLoadAvg.[{#SNMPVALUE}])&lt;300</expression>
+                            <name>{HOSTNAME} {#SNMPVALUE} - CPU usage above 70%</name>
+                            <priority>AVERAGE</priority>
+                            <description>The CPU load on this node has increased to over 70%. If this is a sudden or unexpected increase, immediate investigation is advised.</description>
+                        </trigger_prototype>
+                        <trigger_prototype>
+                            <uuid>8eab4a93d640414b9ffa35d2acb2c646</uuid>
+                            <expression>last(/Custom - HW - Juniper EX/jnxOperating5MinLoadAvg.[{#SNMPVALUE}])&gt;300 and last(/Custom - HW - Juniper EX/jnxOperatingCPU.[{#SNMPVALUE}])&gt;95</expression>
+                            <name>{HOSTNAME} {#SNMPVALUE} - High CPU usage (95%)</name>
+                            <priority>HIGH</priority>
+                            <description>The CPU load on this node has increased to over 95%. If this is a sudden or unexpected increase, immediate investigation is advised.</description>
+                        </trigger_prototype>
+                    </trigger_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <uuid>1abe842fedf44b49b9367603a59fb5d9</uuid>
+                            <name>Switch Member {#SNMPVALUE} - CPU Usage</name>
+                            <height>300</height>
+                            <ymin_type_1>FIXED</ymin_type_1>
+                            <graph_items>
+                                <graph_item>
+                                    <color>1A7C11</color>
+                                    <calc_fnc>MAX</calc_fnc>
+                                    <item>
+                                        <host>Custom - HW - Juniper EX</host>
+                                        <key>jnxOperating5MinLoadAvg.[{#SNMPVALUE}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>F63100</color>
+                                    <yaxisside>RIGHT</yaxisside>
+                                    <calc_fnc>MAX</calc_fnc>
+                                    <item>
+                                        <host>Custom - HW - Juniper EX</host>
+                                        <key>jnxOperatingCPU.[{#SNMPVALUE}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <uuid>cacf086193c84c789cf6e95829e553c9</uuid>
+                            <name>Switch Member {#SNMPVALUE} - Memory usage</name>
+                            <height>300</height>
+                            <ymin_type_1>FIXED</ymin_type_1>
+                            <graph_items>
+                                <graph_item>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Custom - HW - Juniper EX</host>
+                                        <key>jnxOperatingBuffer.[{#SNMPVALUE}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                        <graph_prototype>
+                            <uuid>d129289f962d4be482c88ad595d01846</uuid>
+                            <name>Switch Member {#SNMPVALUE} - Routing engine temperature</name>
+                            <height>300</height>
+                            <ymin_type_1>FIXED</ymin_type_1>
+                            <graph_items>
+                                <graph_item>
+                                    <drawtype>GRADIENT_LINE</drawtype>
+                                    <color>1A7C11</color>
+                                    <item>
+                                        <host>Custom - HW - Juniper EX</host>
+                                        <key>jnxOperatingTemp.[{#SNMPVALUE}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
+                </discovery_rule>
+                <discovery_rule>
+                    <uuid>22890554c96a4acda2e268b647a16152</uuid>
+                    <name>JunOS Virtual Chassis Member Info</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>discovery[{#SNMPVALUE},1.3.6.1.4.1.2636.3.40.1.4.1.1.1.1]</snmp_oid>
+                    <key>jnxVirtualChassisMemberId</key>
+                    <delay>3600</delay>
+                    <lifetime>30d</lifetime>
+                    <enabled_lifetime_type>DISABLE_NEVER</enabled_lifetime_type>
+                    <description>Discovers Virtual Chassis member information including role, serial number, and MAC address</description>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>e4482520ec1f4a058095f29a88e51dda</uuid>
+                            <name>VC Member {#SNMPVALUE} - Firmware Version</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.4.1.2636.3.40.1.4.1.1.1.5.{#SNMPINDEX}</snmp_oid>
+                            <key>jnxVCMemberFirmware[{#SNMPINDEX}]</key>
+                            <delay>3600</delay>
+                            <history>90d</history>
+                            <value_type>TEXT</value_type>
+                            <trends>0</trends>
+                            <description>Virtual Chassis member JunOS firmware version from jnxVirtualChassisMemberTable</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Virtual Chassis</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>302a1b397af84e37b7ac94d5cf92599c</uuid>
+                                    <expression>(last(/Custom - HW - Juniper EX/jnxVCMemberFirmware[{#SNMPINDEX}],#1)&lt;&gt;last(/Custom - HW - Juniper EX/jnxVCMemberFirmware[{#SNMPINDEX}],#2))=1</expression>
+                                    <name>VC Member {#SNMPVALUE} - Firmware version has changed</name>
+                                    <priority>WARNING</priority>
+                                    <description>Firmware version for Virtual Chassis member {#SNMPVALUE} has changed.
+
+                                        New version: {ITEM.LASTVALUE}
+
+                                        This may indicate:
+                                        - Planned maintenance/upgrade
+                                        - System reload
+                                        - Member replacement
+
+                                        Review change management logs and verify this was intentional.</description>
+                                    <manual_close>YES</manual_close>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>91e0ae539faa4963b71746834e2d3d3a</uuid>
+                            <name>VC Member {#SNMPVALUE} - MAC Address</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.4.1.2636.3.40.1.4.1.1.1.4.{#SNMPINDEX}</snmp_oid>
+                            <key>jnxVCMemberMAC[{#SNMPINDEX}]</key>
+                            <delay>3600</delay>
+                            <history>7d</history>
+                            <value_type>TEXT</value_type>
+                            <trends>0</trends>
+                            <description>Virtual Chassis member MAC address</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Virtual Chassis</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>f5fce6fdad9e48bbb5f91aa475aac839</uuid>
+                            <name>VC Member {#SNMPVALUE} - Role</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.4.1.2636.3.40.1.4.1.1.1.3.{#SNMPINDEX}</snmp_oid>
+                            <key>jnxVCMemberRole[{#SNMPINDEX}]</key>
+                            <delay>300</delay>
+                            <history>7d</history>
+                            <description>Virtual Chassis member role (1=master, 2=backup, 3=linecard)</description>
+                            <valuemap>
+                                <name>jnxVirtualChassisMemberRole</name>
+                            </valuemap>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Virtual Chassis</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>9afa40f881eb4ce989717ae64eaedca4</uuid>
+                            <name>VC Member {#SNMPVALUE} - Serial Number</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.4.1.2636.3.40.1.4.1.1.1.2.{#SNMPINDEX}</snmp_oid>
+                            <key>jnxVCMemberSerial[{#SNMPINDEX}]</key>
+                            <delay>3600</delay>
+                            <history>7d</history>
+                            <value_type>TEXT</value_type>
+                            <trends>0</trends>
+                            <description>Virtual Chassis member serial number</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Virtual Chassis</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+            </discovery_rules>
+            <tags>
+                <tag>
+                    <tag>class</tag>
+                    <value>network</value>
+                </tag>
+                <tag>
+                    <tag>target</tag>
+                    <value>EX Switches</value>
+                </tag>
+                <tag>
+                    <tag>target</tag>
+                    <value>Juniper</value>
+                </tag>
+            </tags>
+            <dashboards>
+                <dashboard>
+                    <uuid>3f69e46b9e20479392be510fc69c1055</uuid>
+                    <name>Global</name>
+                    <pages>
+                        <page>
+                            <widgets>
+                                <widget>
+                                    <type>graphprototype</type>
+                                    <width>24</width>
+                                    <height>7</height>
+                                    <fields>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>columns</name>
+                                            <value>1</value>
+                                        </field>
+                                        <field>
+                                            <type>GRAPH_PROTOTYPE</type>
+                                            <name>graphid</name>
+                                            <value>
+                                                <host>Custom - HW - Juniper EX</host>
+                                                <name>Switch Member {#SNMPVALUE} - CPU Usage</name>
+                                            </value>
+                                        </field>
+                                        <field>
+                                            <type>STRING</type>
+                                            <name>reference</name>
+                                            <value>AAAAA</value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>rows</name>
+                                            <value>1</value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>source_type</name>
+                                            <value>2</value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                                <widget>
+                                    <type>graphprototype</type>
+                                    <x>24</x>
+                                    <width>24</width>
+                                    <height>7</height>
+                                    <fields>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>columns</name>
+                                            <value>1</value>
+                                        </field>
+                                        <field>
+                                            <type>GRAPH_PROTOTYPE</type>
+                                            <name>graphid</name>
+                                            <value>
+                                                <host>Custom - HW - Juniper EX</host>
+                                                <name>Switch Member {#SNMPVALUE} - Memory usage</name>
+                                            </value>
+                                        </field>
+                                        <field>
+                                            <type>STRING</type>
+                                            <name>reference</name>
+                                            <value>AAAAB</value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>rows</name>
+                                            <value>1</value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>source_type</name>
+                                            <value>2</value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                                <widget>
+                                    <type>graphprototype</type>
+                                    <x>48</x>
+                                    <width>24</width>
+                                    <height>7</height>
+                                    <fields>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>columns</name>
+                                            <value>1</value>
+                                        </field>
+                                        <field>
+                                            <type>GRAPH_PROTOTYPE</type>
+                                            <name>graphid</name>
+                                            <value>
+                                                <host>Custom - HW - Juniper EX</host>
+                                                <name>Switch Member {#SNMPVALUE} - Routing engine temperature</name>
+                                            </value>
+                                        </field>
+                                        <field>
+                                            <type>STRING</type>
+                                            <name>reference</name>
+                                            <value>AAAAC</value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>rows</name>
+                                            <value>1</value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>source_type</name>
+                                            <value>2</value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                            </widgets>
+                        </page>
+                    </pages>
+                </dashboard>
+                <dashboard>
+                    <uuid>14ed39ef32d747c1b3088faad7f3f53e</uuid>
+                    <name>Interface Overview</name>
+                    <pages>
+                        <page>
+                            <widgets>
+                                <widget>
+                                    <type>graphprototype</type>
+                                    <width>72</width>
+                                    <height>7</height>
+                                    <fields>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>columns</name>
+                                            <value>1</value>
+                                        </field>
+                                        <field>
+                                            <type>GRAPH_PROTOTYPE</type>
+                                            <name>graphid</name>
+                                            <value>
+                                                <host>Custom - HW - Juniper EX</host>
+                                                <name>Interface {#SNMPVALUE}</name>
+                                            </value>
+                                        </field>
+                                        <field>
+                                            <type>STRING</type>
+                                            <name>reference</name>
+                                            <value>AAAAA</value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>rows</name>
+                                            <value>1</value>
+                                        </field>
+                                        <field>
+                                            <type>INTEGER</type>
+                                            <name>source_type</name>
+                                            <value>2</value>
+                                        </field>
+                                    </fields>
+                                </widget>
+                            </widgets>
+                        </page>
+                    </pages>
+                </dashboard>
+            </dashboards>
+            <valuemaps>
+                <valuemap>
+                    <uuid>af69199de014464b9d46cd6afdd16c39</uuid>
+                    <name>jnxVirtualChassisMemberRole</name>
+                    <mappings>
+                        <mapping>
+                            <value>1</value>
+                            <newvalue>master</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>2</value>
+                            <newvalue>backup</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>3</value>
+                            <newvalue>linecard</newvalue>
+                        </mapping>
+                    </mappings>
+                </valuemap>
+                <valuemap>
+                    <uuid>4cf177c190b44433b04c3b5dd5e4f439</uuid>
+                    <name>Juniper FRU State</name>
+                    <mappings>
+                        <mapping>
+                            <value>1</value>
+                            <newvalue>Unknown</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>2</value>
+                            <newvalue>Empty</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>3</value>
+                            <newvalue>Present</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>4</value>
+                            <newvalue>Ready</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>5</value>
+                            <newvalue>Announce Online</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>6</value>
+                            <newvalue>Online</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>7</value>
+                            <newvalue>Announce Offline</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>8</value>
+                            <newvalue>Offline</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>9</value>
+                            <newvalue>Diagnostic</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>10</value>
+                            <newvalue>Standby</newvalue>
+                        </mapping>
+                    </mappings>
+                </valuemap>
+                <valuemap>
+                    <uuid>34f93d5b85d34fe1bd5b5cedc2065efb</uuid>
+                    <name>Service state</name>
+                    <mappings>
+                        <mapping>
+                            <value>0</value>
+                            <newvalue>Down</newvalue>
+                        </mapping>
+                        <mapping>
+                            <value>1</value>
+                            <newvalue>Up</newvalue>
+                        </mapping>
+                    </mappings>
+                </valuemap>
+            </valuemaps>
+        </template>
+    </templates>
+</zabbix_export>
