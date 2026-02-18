@@ -3,15 +3,19 @@
     <version>7.0</version>
     <template_groups>
         <template_group>
-            <uuid>72d96c858e3a4736a6e094d23d8c5587</uuid>
-            <name>Templates/Network devices</name>
+            <uuid>66f4d4ab016c4ed685b2ef4a7425d301</uuid>
+            <name>Networking Hardware</name>
+        </template_group>
+        <template_group>
+            <uuid>7df96b18c230490a9a0a9e2307226338</uuid>
+            <name>Templates</name>
         </template_group>
     </template_groups>
     <templates>
         <template>
-            <uuid>860ac494df8941ca936ce97c73ae632a</uuid>
-            <template>Custom - HW - Juniper EX</template>
-            <name>Custom - HW - Juniper EX</name>
+            <uuid>17516d892b1c40888df0fabaa56a778b</uuid>
+            <template>Juniper EX</template>
+            <name>Juniper EX</name>
             <groups>
                 <group>
                     <name>Networking Hardware</name>
@@ -40,8 +44,8 @@
                     <triggers>
                         <trigger>
                             <uuid>58abcaff11b04587926e5b7d6b8cda0e</uuid>
-                            <expression>sum(/Custom - HW - Juniper EX/icmpping,#3)=0 or ({TRIGGER.VALUE}=1 and sum(/Custom - HW - Juniper EX/icmpping,#3)&lt;&gt;3)</expression>
-                            <name>ICMP Response</name>
+                            <expression>sum(/Juniper EX/icmpping,#3)=0 or ({TRIGGER.VALUE}=1 and sum(/Juniper EX/icmpping,#3)&lt;&gt;3)</expression>
+                            <name>Unavailable by ICMP ping</name>
                             <priority>DISASTER</priority>
                             <description>The switch member has stopped responding to ICMP echo requests, and is likely offline.
 
@@ -67,7 +71,7 @@
                     <triggers>
                         <trigger>
                             <uuid>04df3679a7314e659dceeba39b7c0a52</uuid>
-                            <expression>last(/Custom - HW - Juniper EX/RedAlarm)&lt;&gt;2</expression>
+                            <expression>last(/Juniper EX/RedAlarm)&lt;&gt;2</expression>
                             <name>Red Alarm</name>
                             <priority>HIGH</priority>
                             <description>A red alarm is reporting on this device. Please login to the CLI and check what this alert has been caused by.</description>
@@ -130,7 +134,7 @@
                     <triggers>
                         <trigger>
                             <uuid>2934f6a94c474c46901041dfc98c7d66</uuid>
-                            <expression>(last(/Custom - HW - Juniper EX/system.hw.serialnumber,#1)&lt;&gt;last(/Custom - HW - Juniper EX/system.hw.serialnumber,#2))=1 and length(last(/Custom - HW - Juniper EX/system.hw.serialnumber))&gt;0</expression>
+                            <expression>(last(/Juniper EX/system.hw.serialnumber,#1)&lt;&gt;last(/Juniper EX/system.hw.serialnumber,#2))=1 and length(last(/Juniper EX/system.hw.serialnumber))&gt;0</expression>
                             <name>Device has been replaced</name>
                             <priority>INFO</priority>
                             <description>Device serial number has changed. Acknowledge to close the problem manually.</description>
@@ -176,7 +180,7 @@
                     <triggers>
                         <trigger>
                             <uuid>81c4939d8d8843ccabbdaa9357240c9e</uuid>
-                            <expression>(last(/Custom - HW - Juniper EX/system.name,#1)&lt;&gt;last(/Custom - HW - Juniper EX/system.name,#2))=1 and length(last(/Custom - HW - Juniper EX/system.name))&gt;0</expression>
+                            <expression>(last(/Juniper EX/system.name,#1)&lt;&gt;last(/Juniper EX/system.name,#2))=1 and length(last(/Juniper EX/system.name))&gt;0</expression>
                             <name>System name has changed</name>
                             <priority>INFO</priority>
                             <description>The system name has changed. Acknowledge to close the problem manually.</description>
@@ -228,7 +232,7 @@
                     <triggers>
                         <trigger>
                             <uuid>36e1c46aad0045cc80aa8ff06d6d9d3c</uuid>
-                            <expression>last(/Custom - HW - Juniper EX/Uptime)&lt;600</expression>
+                            <expression>last(/Juniper EX/Uptime)&lt;600</expression>
                             <name>has been restarted</name>
                             <priority>INFO</priority>
                         </trigger>
@@ -252,7 +256,7 @@
                     <triggers>
                         <trigger>
                             <uuid>4a418df919294551b937f474163b5faf</uuid>
-                            <expression>last(/Custom - HW - Juniper EX/YellowAlarm)&lt;&gt;2</expression>
+                            <expression>last(/Juniper EX/YellowAlarm)&lt;&gt;2</expression>
                             <name>Yellow Alarm</name>
                             <priority>AVERAGE</priority>
                             <description>A yellow alarm is reporting on this device. Please login to the CLI and check what this alert has been caused by.</description>
@@ -272,7 +276,7 @@
                     <filter>
                         <conditions>
                             <condition>
-                                <macro>{#SNMPVALUE}</macro>
+                                <macro>{#SNMPINDEX}</macro>
                                 <value>^(fe|ge|xe)-[0-9]+\/[0-9]+\/[0-9]+\.[0-9]+$|^(fe|ge|xe)-[0-9]+\/[0-9]+\/[0-9]+$|^(ae|reth|st)[0-9]+\.[0-9]+$|^(ae|reth|st)[0-9]$|^vcp-[0-9]+$|^vlan.[0-9]+$</value>
                                 <formulaid>A</formulaid>
                             </condition>
@@ -283,7 +287,7 @@
                     <item_prototypes>
                         <item_prototype>
                             <uuid>0215f049fc414017b3594a65e40c83f7</uuid>
-                            <name>{#SNMPVALUE} - AdminStatus</name>
+                            <name>{#SNMPINDEX} - AdminStatus</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>1.3.6.1.2.1.2.2.1.7.{#SNMPINDEX}</snmp_oid>
                             <key>AdminStatus[{#SNMPINDEX}]</key>
@@ -317,7 +321,7 @@
                         </item_prototype>
                         <item_prototype>
                             <uuid>c61de84360534233abd13d625c5750e2</uuid>
-                            <name>{#SNMPVALUE} - Inbound discarded packets</name>
+                            <name>{#SNMPINDEX} - Inbound discarded packets</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>1.3.6.1.2.1.2.2.1.13.{#SNMPINDEX}</snmp_oid>
                             <key>Inbound_discarded_packets[{#SNMPINDEX}]</key>
@@ -340,7 +344,7 @@
                         </item_prototype>
                         <item_prototype>
                             <uuid>46e2dd83b9944f26ba0e4fcbd75ed6f2</uuid>
-                            <name>{#SNMPVALUE} - Inbound errors</name>
+                            <name>{#SNMPINDEX} - Inbound errors</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>1.3.6.1.2.1.2.2.1.14.{#SNMPINDEX}</snmp_oid>
                             <key>Inbound_errors[{#SNMPINDEX}]</key>
@@ -364,7 +368,7 @@
                         </item_prototype>
                         <item_prototype>
                             <uuid>ee96063554cf40c192e40e055276ae1c</uuid>
-                            <name>{#SNMPVALUE} - Inbound traffic</name>
+                            <name>{#SNMPINDEX} - Inbound traffic</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>1.3.6.1.2.1.31.1.1.1.6.{#SNMPINDEX}</snmp_oid>
                             <key>Inbound_traffic64[{#SNMPINDEX}]</key>
@@ -396,7 +400,7 @@
                         </item_prototype>
                         <item_prototype>
                             <uuid>162b842ed86544d282e360770bfee238</uuid>
-                            <name>{#SNMPVALUE} - OperStatus</name>
+                            <name>{#SNMPINDEX} - OperStatus</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>1.3.6.1.2.1.2.2.1.8.{#SNMPINDEX}</snmp_oid>
                             <key>OperStatus[{#SNMPINDEX}]</key>
@@ -440,7 +444,7 @@
                         </item_prototype>
                         <item_prototype>
                             <uuid>30b264385d0d44168223d2c6ac57291e</uuid>
-                            <name>{#SNMPVALUE} - Outbound discarded packets</name>
+                            <name>{#SNMPINDEX} - Outbound discarded packets</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>1.3.6.1.2.1.2.2.1.19.{#SNMPINDEX}</snmp_oid>
                             <key>Outbound_discarded_packets[{#SNMPINDEX}]</key>
@@ -463,7 +467,7 @@
                         </item_prototype>
                         <item_prototype>
                             <uuid>5a6f987b26ff40058fb41408d39c98e9</uuid>
-                            <name>{#SNMPVALUE} - Outbound errors</name>
+                            <name>{#SNMPINDEX} - Outbound errors</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>1.3.6.1.2.1.2.2.1.20.{#SNMPINDEX}</snmp_oid>
                             <key>Outbound_errors[{#SNMPINDEX}]</key>
@@ -487,7 +491,7 @@
                         </item_prototype>
                         <item_prototype>
                             <uuid>ca4615766c2a47fe8b88d6ca7c972558</uuid>
-                            <name>{#SNMPVALUE} - Outbound traffic</name>
+                            <name>{#SNMPINDEX} - Outbound traffic</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>1.3.6.1.2.1.31.1.1.1.10.{#SNMPINDEX}</snmp_oid>
                             <key>Outbound_traffic_64[{#SNMPINDEX}]</key>
@@ -521,23 +525,23 @@
                     <trigger_prototypes>
                         <trigger_prototype>
                             <uuid>5bbd0e33db7c415ebd140608534f8421</uuid>
-                            <expression>(last(/Custom - HW - Juniper EX/Inbound_discarded_packets[{#SNMPINDEX}]) + last(/Custom - HW - Juniper EX/Outbound_discarded_packets[{#SNMPINDEX}])) &gt; 0</expression>
-                            <name>{#SNMPVALUE} Discarded packets &gt; 0</name>
+                            <expression>(last(/Juniper EX/Inbound_discarded_packets[{#SNMPINDEX}]) + last(/Juniper EX/Outbound_discarded_packets[{#SNMPINDEX}])) &gt; 0</expression>
+                            <name>{#SNMPINDEX} Discarded packets &gt; 0</name>
                             <status>DISABLED</status>
                             <priority>INFO</priority>
                         </trigger_prototype>
                         <trigger_prototype>
                             <uuid>48e3cde72de04224bcb008c1bd3bd2d6</uuid>
-                            <expression>(last(/Custom - HW - Juniper EX/Outbound_errors[{#SNMPINDEX}]) +
-                                last(/Custom - HW - Juniper EX/Inbound_errors[{#SNMPINDEX}])) &gt; 0</expression>
-                            <name>{#SNMPVALUE} Errors &gt; 0</name>
+                            <expression>(last(/Juniper EX/Outbound_errors[{#SNMPINDEX}]) +
+                                last(/Juniper EX/Inbound_errors[{#SNMPINDEX}])) &gt; 0</expression>
+                            <name>{#SNMPINDEX} Errors &gt; 0</name>
                             <status>DISABLED</status>
                             <priority>INFO</priority>
                         </trigger_prototype>
                         <trigger_prototype>
                             <uuid>496d4b5cac9a41909bae87f574b69e72</uuid>
-                            <expression>last(/Custom - HW - Juniper EX/AdminStatus[{#SNMPINDEX}])=1 and last(/Custom - HW - Juniper EX/OperStatus[{#SNMPINDEX}])&lt;&gt;1</expression>
-                            <name>{#SNMPVALUE} interface not active, OperStatus={ITEM.VALUE2}</name>
+                            <expression>last(/Juniper EX/AdminStatus[{#SNMPINDEX}])=1 and last(/Juniper EX/OperStatus[{#SNMPINDEX}])&lt;&gt;1</expression>
+                            <name>{#SNMPINDEX} interface not active, OperStatus={ITEM.VALUE2}</name>
                             <status>DISABLED</status>
                             <priority>INFO</priority>
                             <description>Interface should be up, but no link is active</description>
@@ -546,7 +550,7 @@
                     <graph_prototypes>
                         <graph_prototype>
                             <uuid>968b94c098134193964f53dbe660856d</uuid>
-                            <name>Interface {#SNMPVALUE}</name>
+                            <name>Interface {#SNMPINDEX}</name>
                             <graph_items>
                                 <graph_item>
                                     <drawtype>BOLD_LINE</drawtype>
@@ -554,7 +558,7 @@
                                     <yaxisside>RIGHT</yaxisside>
                                     <calc_fnc>MAX</calc_fnc>
                                     <item>
-                                        <host>Custom - HW - Juniper EX</host>
+                                        <host>Juniper EX</host>
                                         <key>Inbound_traffic64[{#SNMPINDEX}]</key>
                                     </item>
                                 </graph_item>
@@ -563,7 +567,7 @@
                                     <color>594CD8</color>
                                     <calc_fnc>MAX</calc_fnc>
                                     <item>
-                                        <host>Custom - HW - Juniper EX</host>
+                                        <host>Juniper EX</host>
                                         <key>Inbound_discarded_packets[{#SNMPINDEX}]</key>
                                     </item>
                                 </graph_item>
@@ -572,7 +576,7 @@
                                     <color>7B72D8</color>
                                     <calc_fnc>MAX</calc_fnc>
                                     <item>
-                                        <host>Custom - HW - Juniper EX</host>
+                                        <host>Juniper EX</host>
                                         <key>Inbound_errors[{#SNMPINDEX}]</key>
                                     </item>
                                 </graph_item>
@@ -583,7 +587,7 @@
                                     <yaxisside>RIGHT</yaxisside>
                                     <calc_fnc>MAX</calc_fnc>
                                     <item>
-                                        <host>Custom - HW - Juniper EX</host>
+                                        <host>Juniper EX</host>
                                         <key>Outbound_traffic_64[{#SNMPINDEX}]</key>
                                     </item>
                                 </graph_item>
@@ -592,7 +596,7 @@
                                     <color>FFD440</color>
                                     <calc_fnc>MAX</calc_fnc>
                                     <item>
-                                        <host>Custom - HW - Juniper EX</host>
+                                        <host>Juniper EX</host>
                                         <key>Outbound_discarded_packets[{#SNMPINDEX}]</key>
                                     </item>
                                 </graph_item>
@@ -601,7 +605,7 @@
                                     <color>FFE073</color>
                                     <calc_fnc>MAX</calc_fnc>
                                     <item>
-                                        <host>Custom - HW - Juniper EX</host>
+                                        <host>Juniper EX</host>
                                         <key>Outbound_errors[{#SNMPINDEX}]</key>
                                     </item>
                                 </graph_item>
@@ -621,10 +625,10 @@
                     <item_prototypes>
                         <item_prototype>
                             <uuid>c3f187273bad40feb12a110e8dc2223b</uuid>
-                            <name>Switch Member {#SNMPVALUE} - Virtual Chassis Status</name>
+                            <name>Switch Member {#SNMPINDEX} - Virtual Chassis Status</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>1.3.6.1.4.1.2636.3.1.15.1.8.7.{#SNMPVALUE}.0.0</snmp_oid>
-                            <key>jnxFruState.[{#SNMPVALUE}]</key>
+                            <key>jnxFruState.[{#SNMPINDEX}]</key>
                             <delay>60</delay>
                             <history>90d</history>
                             <description>Virtual Chassis Member Operational Status (jnxFruState)
@@ -651,8 +655,8 @@
                             <trigger_prototypes>
                                 <trigger_prototype>
                                     <uuid>16b26497ca5c4dc1a379966ef7518087</uuid>
-                                    <expression>last(/Custom - HW - Juniper EX/jnxFruState.[{#SNMPVALUE}])&lt;&gt;6</expression>
-                                    <name>{HOSTNAME} Switch Member {#SNMPVALUE} - VC Member Not Online (Status={ITEM.VALUE})</name>
+                                    <expression>last(/Juniper EX/jnxFruState.[{#SNMPINDEX}])&lt;&gt;6</expression>
+                                    <name>{HOSTNAME} Switch Member {#SNMPINDEX} - VC Member Not Online (Status={ITEM.VALUE})</name>
                                     <priority>HIGH</priority>
                                     <description>This trigger fires when a Virtual Chassis member is not in the expected Online state (6). Any other state indicates a potential issue with the VC member.</description>
                                 </trigger_prototype>
@@ -660,10 +664,10 @@
                         </item_prototype>
                         <item_prototype>
                             <uuid>c36b85e2ee094ebea48d40685c7097ed</uuid>
-                            <name>Switch Member {#SNMPVALUE} - 5 min load average</name>
+                            <name>Switch Member {#SNMPINDEX} - 5 min load average</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.2636.3.1.13.1.21.7.{#SNMPVALUE}.0.0</snmp_oid>
-                            <key>jnxOperating5MinLoadAvg.[{#SNMPVALUE}]</key>
+                            <key>jnxOperating5MinLoadAvg.[{#SNMPINDEX}]</key>
                             <delay>90</delay>
                             <history>7d</history>
                             <tags>
@@ -674,29 +678,11 @@
                             </tags>
                         </item_prototype>
                         <item_prototype>
-                            <uuid>37a81fd1411d439d8a5ccfaa1dcf9256</uuid>
-                            <name>Switch Member {#SNMPVALUE} - Model Name</name>
-                            <type>SNMP_AGENT</type>
-                            <snmp_oid>.1.3.6.1.4.1.2636.3.40.1.4.1.1.1.8.{#SNMPVALUE}</snmp_oid>
-                            <key>system.hw.model[{#SNMPVALUE}]</key>
-                            <delay>3600</delay>
-                            <history>90d</history>
-                            <value_type>CHAR</value_type>
-                            <trends>0</trends>
-                            <description>Hardware model name (Juniper MIB: jnxBoxDescr), e.g. &quot;EX3300&quot;</description>
-                            <tags>
-                                <tag>
-                                    <tag>Application</tag>
-                                    <value>Device Health</value>
-                                </tag>
-                            </tags>
-                        </item_prototype>
-                        <item_prototype>
                             <uuid>e9b056e3f65b4ce4b658fbc2afa06a3b</uuid>
-                            <name>Switch Member {#SNMPVALUE} - Memory usage</name>
+                            <name>Switch Member {#SNMPINDEX} - Memory usage</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.2636.3.1.13.1.11.7.{#SNMPVALUE}.0.0</snmp_oid>
-                            <key>jnxOperatingBuffer.[{#SNMPVALUE}]</key>
+                            <key>jnxOperatingBuffer.[{#SNMPINDEX}]</key>
                             <delay>90</delay>
                             <history>7d</history>
                             <units>%</units>
@@ -709,24 +695,24 @@
                             <trigger_prototypes>
                                 <trigger_prototype>
                                     <uuid>33685b223f6f452983523a9cfe22a3cb</uuid>
-                                    <expression>last(/Custom - HW - Juniper EX/jnxOperatingBuffer.[{#SNMPVALUE}])&gt;70 and last(/Custom - HW - Juniper EX/jnxOperatingBuffer.[{#SNMPVALUE}])&lt;95</expression>
-                                    <name>{HOSTNAME} {#SNMPVALUE} - Memory usage above 70%</name>
+                                    <expression>last(/Juniper EX/jnxOperatingBuffer.[{#SNMPINDEX}])&gt;70 and last(/Juniper EX/jnxOperatingBuffer.[{#SNMPINDEX}])&lt;95</expression>
+                                    <name>{HOSTNAME} {#SNMPINDEX} - Memory usage above 70%</name>
                                     <priority>AVERAGE</priority>
                                 </trigger_prototype>
                                 <trigger_prototype>
                                     <uuid>27626a6e00114ab2a5b1f223d22bb9e2</uuid>
-                                    <expression>last(/Custom - HW - Juniper EX/jnxOperatingBuffer.[{#SNMPVALUE}])&gt;95</expression>
-                                    <name>{HOSTNAME} {#SNMPVALUE} - Memory usage above 95%</name>
+                                    <expression>last(/Juniper EX/jnxOperatingBuffer.[{#SNMPINDEX}])&gt;95</expression>
+                                    <name>{HOSTNAME} {#SNMPINDEX} - Memory usage above 95%</name>
                                     <priority>HIGH</priority>
                                 </trigger_prototype>
                             </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <uuid>2a1d51e98d784ae79ab6be834c65933b</uuid>
-                            <name>Switch Member {#SNMPVALUE} - CPU usage</name>
+                            <name>Switch Member {#SNMPINDEX} - CPU usage</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.2636.3.1.13.1.8.7.{#SNMPVALUE}.0.0</snmp_oid>
-                            <key>jnxOperatingCPU.[{#SNMPVALUE}]</key>
+                            <key>jnxOperatingCPU.[{#SNMPINDEX}]</key>
                             <delay>90</delay>
                             <history>7d</history>
                             <units>%</units>
@@ -739,10 +725,10 @@
                         </item_prototype>
                         <item_prototype>
                             <uuid>0fa8eb208d1047149e16a9e35d77797c</uuid>
-                            <name>Switch Member {#SNMPVALUE} - Routing engine temperature</name>
+                            <name>Switch Member {#SNMPINDEX} - Routing engine temperature</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.2636.3.1.13.1.7.7.{#SNMPVALUE}.0.0</snmp_oid>
-                            <key>jnxOperatingTemp.[{#SNMPVALUE}]</key>
+                            <key>jnxOperatingTemp.[{#SNMPINDEX}]</key>
                             <delay>90</delay>
                             <history>7d</history>
                             <units>°C</units>
@@ -755,8 +741,8 @@
                             <trigger_prototypes>
                                 <trigger_prototype>
                                     <uuid>3f61764df09d4182b37be6874d57b3f7</uuid>
-                                    <expression>min(/Custom - HW - Juniper EX/jnxOperatingTemp.[{#SNMPVALUE}],60s)&gt;60</expression>
-                                    <name>{HOSTNAME} {#SNMPVALUE} - High temperature</name>
+                                    <expression>min(/Juniper EX/jnxOperatingTemp.[{#SNMPINDEX}],60s)&gt;60</expression>
+                                    <name>{HOSTNAME} {#SNMPINDEX} - High temperature</name>
                                     <priority>HIGH</priority>
                                     <description>The temperature of this switch member is above 60ºC.
 
@@ -768,15 +754,15 @@
                     <trigger_prototypes>
                         <trigger_prototype>
                             <uuid>94ad6fdb7401434eb11006f2da3e8d38</uuid>
-                            <expression>min(/Custom - HW - Juniper EX/jnxOperatingCPU.[{#SNMPVALUE}],30s)&gt;70 and min(/Custom - HW - Juniper EX/jnxOperatingCPU.[{#SNMPVALUE}],30s)&lt;95 and last(/Custom - HW - Juniper EX/jnxOperating5MinLoadAvg.[{#SNMPVALUE}])&gt;100 and last(/Custom - HW - Juniper EX/jnxOperating5MinLoadAvg.[{#SNMPVALUE}])&lt;300</expression>
-                            <name>{HOSTNAME} {#SNMPVALUE} - CPU usage above 70%</name>
+                            <expression>min(/Juniper EX/jnxOperatingCPU.[{#SNMPINDEX}],30s)&gt;70 and min(/Juniper EX/jnxOperatingCPU.[{#SNMPINDEX}],30s)&lt;95 and last(/Juniper EX/jnxOperating5MinLoadAvg.[{#SNMPINDEX}])&gt;100 and last(/Juniper EX/jnxOperating5MinLoadAvg.[{#SNMPINDEX}])&lt;300</expression>
+                            <name>{HOSTNAME} {#SNMPINDEX} - CPU usage above 70%</name>
                             <priority>AVERAGE</priority>
                             <description>The CPU load on this node has increased to over 70%. If this is a sudden or unexpected increase, immediate investigation is advised.</description>
                         </trigger_prototype>
                         <trigger_prototype>
                             <uuid>8eab4a93d640414b9ffa35d2acb2c646</uuid>
-                            <expression>last(/Custom - HW - Juniper EX/jnxOperating5MinLoadAvg.[{#SNMPVALUE}])&gt;300 and last(/Custom - HW - Juniper EX/jnxOperatingCPU.[{#SNMPVALUE}])&gt;95</expression>
-                            <name>{HOSTNAME} {#SNMPVALUE} - High CPU usage (95%)</name>
+                            <expression>last(/Juniper EX/jnxOperating5MinLoadAvg.[{#SNMPINDEX}])&gt;300 and last(/Juniper EX/jnxOperatingCPU.[{#SNMPINDEX}])&gt;95</expression>
+                            <name>{HOSTNAME} {#SNMPINDEX} - High CPU usage (95%)</name>
                             <priority>HIGH</priority>
                             <description>The CPU load on this node has increased to over 95%. If this is a sudden or unexpected increase, immediate investigation is advised.</description>
                         </trigger_prototype>
@@ -784,7 +770,7 @@
                     <graph_prototypes>
                         <graph_prototype>
                             <uuid>1abe842fedf44b49b9367603a59fb5d9</uuid>
-                            <name>Switch Member {#SNMPVALUE} - CPU Usage</name>
+                            <name>Switch Member {#SNMPINDEX} - CPU Usage</name>
                             <height>300</height>
                             <ymin_type_1>FIXED</ymin_type_1>
                             <graph_items>
@@ -792,8 +778,8 @@
                                     <color>1A7C11</color>
                                     <calc_fnc>MAX</calc_fnc>
                                     <item>
-                                        <host>Custom - HW - Juniper EX</host>
-                                        <key>jnxOperating5MinLoadAvg.[{#SNMPVALUE}]</key>
+                                        <host>Juniper EX</host>
+                                        <key>jnxOperating5MinLoadAvg.[{#SNMPINDEX}]</key>
                                     </item>
                                 </graph_item>
                                 <graph_item>
@@ -802,15 +788,15 @@
                                     <yaxisside>RIGHT</yaxisside>
                                     <calc_fnc>MAX</calc_fnc>
                                     <item>
-                                        <host>Custom - HW - Juniper EX</host>
-                                        <key>jnxOperatingCPU.[{#SNMPVALUE}]</key>
+                                        <host>Juniper EX</host>
+                                        <key>jnxOperatingCPU.[{#SNMPINDEX}]</key>
                                     </item>
                                 </graph_item>
                             </graph_items>
                         </graph_prototype>
                         <graph_prototype>
                             <uuid>cacf086193c84c789cf6e95829e553c9</uuid>
-                            <name>Switch Member {#SNMPVALUE} - Memory usage</name>
+                            <name>Switch Member {#SNMPINDEX} - Memory usage</name>
                             <height>300</height>
                             <ymin_type_1>FIXED</ymin_type_1>
                             <graph_items>
@@ -818,15 +804,15 @@
                                     <drawtype>GRADIENT_LINE</drawtype>
                                     <color>1A7C11</color>
                                     <item>
-                                        <host>Custom - HW - Juniper EX</host>
-                                        <key>jnxOperatingBuffer.[{#SNMPVALUE}]</key>
+                                        <host>Juniper EX</host>
+                                        <key>jnxOperatingBuffer.[{#SNMPINDEX}]</key>
                                     </item>
                                 </graph_item>
                             </graph_items>
                         </graph_prototype>
                         <graph_prototype>
                             <uuid>d129289f962d4be482c88ad595d01846</uuid>
-                            <name>Switch Member {#SNMPVALUE} - Routing engine temperature</name>
+                            <name>Switch Member {#SNMPINDEX} - Routing engine temperature</name>
                             <height>300</height>
                             <ymin_type_1>FIXED</ymin_type_1>
                             <graph_items>
@@ -834,19 +820,33 @@
                                     <drawtype>GRADIENT_LINE</drawtype>
                                     <color>1A7C11</color>
                                     <item>
-                                        <host>Custom - HW - Juniper EX</host>
-                                        <key>jnxOperatingTemp.[{#SNMPVALUE}]</key>
+                                        <host>Juniper EX</host>
+                                        <key>jnxOperatingTemp.[{#SNMPINDEX}]</key>
                                     </item>
                                 </graph_item>
                             </graph_items>
                         </graph_prototype>
                     </graph_prototypes>
+                    <preprocessing>
+                        <step>
+                            <type>JAVASCRIPT</type>
+                            <parameters>
+                                <parameter>var data = JSON.parse(value);
+                                    for (var i = 0; i &lt; data.length; i++) {
+                                    // Splits &quot;1.0.0&quot;, takes the &quot;1&quot;, subtracts 1 to get &quot;0&quot;
+                                    var parts = data[i][&quot;{#SNMPINDEX}&quot;].split('.');
+                                    data[i][&quot;{#SNMPINDEX}&quot;] = (parseInt(parts[0]) - 1).toString();
+                                    }
+                                    return JSON.stringify(data);</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
                 </discovery_rule>
                 <discovery_rule>
                     <uuid>22890554c96a4acda2e268b647a16152</uuid>
                     <name>JunOS Virtual Chassis Member Info</name>
                     <type>SNMP_AGENT</type>
-                    <snmp_oid>discovery[{#SNMPVALUE},1.3.6.1.4.1.2636.3.40.1.4.1.1.1.1]</snmp_oid>
+                    <snmp_oid>discovery[{#SNMPVALUE},1.3.6.1.4.1.2636.3.40.1.4.1.1.1.2]</snmp_oid>
                     <key>jnxVirtualChassisMemberId</key>
                     <delay>3600</delay>
                     <lifetime>30d</lifetime>
@@ -855,7 +855,7 @@
                     <item_prototypes>
                         <item_prototype>
                             <uuid>e4482520ec1f4a058095f29a88e51dda</uuid>
-                            <name>VC Member {#SNMPVALUE} - Firmware Version</name>
+                            <name>VC Member {#SNMPINDEX} - Firmware Version</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>1.3.6.1.4.1.2636.3.40.1.4.1.1.1.5.{#SNMPINDEX}</snmp_oid>
                             <key>jnxVCMemberFirmware[{#SNMPINDEX}]</key>
@@ -873,10 +873,10 @@
                             <trigger_prototypes>
                                 <trigger_prototype>
                                     <uuid>302a1b397af84e37b7ac94d5cf92599c</uuid>
-                                    <expression>(last(/Custom - HW - Juniper EX/jnxVCMemberFirmware[{#SNMPINDEX}],#1)&lt;&gt;last(/Custom - HW - Juniper EX/jnxVCMemberFirmware[{#SNMPINDEX}],#2))=1</expression>
-                                    <name>VC Member {#SNMPVALUE} - Firmware version has changed</name>
+                                    <expression>(last(/Juniper EX/jnxVCMemberFirmware[{#SNMPINDEX}],#1)&lt;&gt;last(/Juniper EX/jnxVCMemberFirmware[{#SNMPINDEX}],#2))=1</expression>
+                                    <name>VC Member {#SNMPINDEX} - Firmware version has changed</name>
                                     <priority>WARNING</priority>
-                                    <description>Firmware version for Virtual Chassis member {#SNMPVALUE} has changed.
+                                    <description>Firmware version for Virtual Chassis member {#SNMPINDEX} has changed.
 
                                         New version: {ITEM.LASTVALUE}
 
@@ -892,7 +892,7 @@
                         </item_prototype>
                         <item_prototype>
                             <uuid>91e0ae539faa4963b71746834e2d3d3a</uuid>
-                            <name>VC Member {#SNMPVALUE} - MAC Address</name>
+                            <name>VC Member {#SNMPINDEX} - MAC Address</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>1.3.6.1.4.1.2636.3.40.1.4.1.1.1.4.{#SNMPINDEX}</snmp_oid>
                             <key>jnxVCMemberMAC[{#SNMPINDEX}]</key>
@@ -910,7 +910,7 @@
                         </item_prototype>
                         <item_prototype>
                             <uuid>f5fce6fdad9e48bbb5f91aa475aac839</uuid>
-                            <name>VC Member {#SNMPVALUE} - Role</name>
+                            <name>VC Member {#SNMPINDEX} - Role</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>1.3.6.1.4.1.2636.3.40.1.4.1.1.1.3.{#SNMPINDEX}</snmp_oid>
                             <key>jnxVCMemberRole[{#SNMPINDEX}]</key>
@@ -929,7 +929,7 @@
                         </item_prototype>
                         <item_prototype>
                             <uuid>9afa40f881eb4ce989717ae64eaedca4</uuid>
-                            <name>VC Member {#SNMPVALUE} - Serial Number</name>
+                            <name>VC Member {#SNMPINDEX} - Serial Number</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>1.3.6.1.4.1.2636.3.40.1.4.1.1.1.2.{#SNMPINDEX}</snmp_oid>
                             <key>jnxVCMemberSerial[{#SNMPINDEX}]</key>
@@ -938,6 +938,24 @@
                             <value_type>TEXT</value_type>
                             <trends>0</trends>
                             <description>Virtual Chassis member serial number</description>
+                            <tags>
+                                <tag>
+                                    <tag>Application</tag>
+                                    <value>Virtual Chassis</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>37a81fd1411d439d8a5ccfaa1dcf9256</uuid>
+                            <name>VC Member {#SNMPINDEX} - Model Name</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>1.3.6.1.4.1.2636.3.40.1.4.1.1.1.8.{#SNMPINDEX}</snmp_oid>
+                            <key>system.hw.chassis.model[{#SNMPINDEX}]</key>
+                            <delay>3600</delay>
+                            <history>90d</history>
+                            <value_type>CHAR</value_type>
+                            <trends>0</trends>
+                            <description>Hardware model name from jnxVirtualChassisMemberTable</description>
                             <tags>
                                 <tag>
                                     <tag>Application</tag>
@@ -983,8 +1001,8 @@
                                             <type>GRAPH_PROTOTYPE</type>
                                             <name>graphid</name>
                                             <value>
-                                                <host>Custom - HW - Juniper EX</host>
-                                                <name>Switch Member {#SNMPVALUE} - CPU Usage</name>
+                                                <host>Juniper EX</host>
+                                                <name>Switch Member {#SNMPINDEX} - CPU Usage</name>
                                             </value>
                                         </field>
                                         <field>
@@ -1019,8 +1037,8 @@
                                             <type>GRAPH_PROTOTYPE</type>
                                             <name>graphid</name>
                                             <value>
-                                                <host>Custom - HW - Juniper EX</host>
-                                                <name>Switch Member {#SNMPVALUE} - Memory usage</name>
+                                                <host>Juniper EX</host>
+                                                <name>Switch Member {#SNMPINDEX} - Memory usage</name>
                                             </value>
                                         </field>
                                         <field>
@@ -1055,8 +1073,8 @@
                                             <type>GRAPH_PROTOTYPE</type>
                                             <name>graphid</name>
                                             <value>
-                                                <host>Custom - HW - Juniper EX</host>
-                                                <name>Switch Member {#SNMPVALUE} - Routing engine temperature</name>
+                                                <host>Juniper EX</host>
+                                                <name>Switch Member {#SNMPINDEX} - Routing engine temperature</name>
                                             </value>
                                         </field>
                                         <field>
@@ -1100,8 +1118,8 @@
                                             <type>GRAPH_PROTOTYPE</type>
                                             <name>graphid</name>
                                             <value>
-                                                <host>Custom - HW - Juniper EX</host>
-                                                <name>Interface {#SNMPVALUE}</name>
+                                                <host>Juniper EX</host>
+                                                <name>Interface {#SNMPINDEX}</name>
                                             </value>
                                         </field>
                                         <field>
